@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}  <!-- تحميل crispy forms -->
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3 class="card-title">{{ title }}</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}  <!-- استخدام crispy forms لعرض النموذج -->
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-secondary">Save</button>
+                    <a href="{% url 'list' todo_list.id %}" class="btn btn-danger">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

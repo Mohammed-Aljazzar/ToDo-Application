@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+    <!-- index.html -->
+    <div class="container my-5">
+        <!-- Add New List Button -->
+        <div class="text-center mb-5">
+            <button 
+                class="btn btn-primary btn-lg shadow-lg animate__animated animate__pulse animate__infinite" 
+                onclick="location.href='{% url 'list-add' %}'">
+                <i class="bi bi-plus-circle-fill me-2"></i> Add a New List
+            </button>
+        </div>
+
+        <!-- Lists Heading -->
+        {% if object_list %}
+            <h3 class="text-center mb-5 display-4 fw-bold text-secondary">All My Lists</h3>
+        {% endif %}
+
+        <!-- Lists Display -->
+        <div class="row g-4 justify-content-center">
+            {% for todolist in object_list %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card h-100 shadow-lg border-0 animate__animated animate__zoomIn">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold text-primary">{{ todolist.title }}</h5>
+                            <p class="card-text text-muted small">
+                                {{ todolist.todoitem_set.count }} Item{{ todolist.todoitem_set.count|pluralize }}
+                            </p>
+                            <a 
+                                href="{% url 'list' todolist.id %}" 
+                                class="btn btn-outline-primary stretched-link">
+                                Explore Items
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center mt-4">
+                    <h4 class="text-muted display-6 fw-bold">No Lists Yet!</h4>
+                    <p class="text-muted lead">Start by adding a new list above.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Custom CSS for Gradients and Animations -->
+    <style>
+        /* Gradient Background for Buttons */
+        .btn-gradient {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            border: none;
+            transition: all 0.4s ease;
+        }
+
+        .btn-gradient:hover {
+            background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(30, 60, 114, 0.4);
+        }
+
+        /* Gradient Text for Heading */
+        .text-gradient {
+            background: linear-gradient(90deg, #1e3c72, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Outline Button Gradient */
+        .btn-outline-primary.btn-gradient {
+            border: 2px solid #1e3c72;
+            color: #1e3c72;
+            background: transparent;
+            transition: all 0.4s ease;
+        }
+
+        .btn-outline-primary.btn-gradient:hover {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: #fff;
+            border-color: transparent;
+        }
+    </style>
+{% endblock %}
